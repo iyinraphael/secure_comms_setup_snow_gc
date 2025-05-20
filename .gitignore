@@ -17,7 +17,7 @@ terraform.rc
 .terraform.lock.hcl
 
 \*.tfvars
-\*.tfvars.json
+\*.tfvars.jsonrm
 secret.tfvars
 secret.tfvars.json
 
@@ -25,6 +25,7 @@ secret.tfvars.json
 
 .vscode/
 .idea/
+
 \*.swp
 
 .DS\_Store
