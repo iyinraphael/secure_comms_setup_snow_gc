@@ -32,11 +32,6 @@ variable "genesyscloud_region" {
   type        = string
 }
 
-variable "auth_role_name" {
-  description = "Name of the custom Genesys Cloud role for ServiceNow integration"
-  type        = string
-}
-
 variable "oauth_client_name" {
   description = "Name for the Genesys Cloud OAuth client"
   type        = string
@@ -48,8 +43,14 @@ variable "oauth_token_validity_seconds" {
   default     = 86400
 }
 
-variable "division_name" {
+variable "division_id" {
   description = "Division in which to assign the integration role"
+  type        = string
+  default     = "Home"
+}
+
+variable "role_id" {
+  description = "Role id in which to assign the integration role"
   type        = string
   default     = "Home"
 }
@@ -120,6 +121,11 @@ variable "alias_name" {
 }
 
 variable "connection_alias" {
+  type        = string
+  description = "ServiceNow connection and credentials alias"
+}
+
+variable "terraform_oauth_client_name" {
   type        = string
   description = "ServiceNow connection and credentials alias"
 }

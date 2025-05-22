@@ -10,10 +10,10 @@ module "genesys" {
   clientId                     = var.oauthclient_id
   clientSecret                 = var.oauthclient_secret
   genesyscloud_region          = var.genesyscloud_region
-  auth_role_name               = var.auth_role_name
   oauth_client_name            = var.oauth_client_name
   oauth_token_validity_seconds = var.oauth_token_validity_seconds
-  division_name                = var.division_name
+  division_id                  = var.division_id
+  role_id                      = var.role_id
 }
 
 module "servicenow" {

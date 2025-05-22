@@ -1,8 +1,3 @@
-variable "auth_role_name" {
-  description = "Name of the custom Genesys Cloud role for ServiceNow integration"
-  type        = string
-  default     = "SN Integration Role Automate"
-}
 
 variable "oauth_client_name" {
   description = "Name for the Genesys Cloud OAuth client"
@@ -14,12 +9,6 @@ variable "oauth_token_validity_seconds" {
   description = "Lifetime (in seconds) for tokens issued by this OAuth client"
   type        = number
   default    = 86400
-}
-
-variable "division_name" {
-  description = "Division in which to assign the integration role"
-  type        = string
-  default     = "Home"
 }
 
 variable "genesyscloud_region" {
@@ -36,4 +25,16 @@ variable "clientId" {
 variable "clientSecret" {
   description = "Client secret created from Genesys Cloud Oauth"
   type        = string
+}
+
+variable "division_id" {
+  description = "Division in which to assign the integration role"
+  type        = string
+  default     = "Home"
+}
+
+variable "role_id" {
+  description = "Role id in which to assign the integration role"
+  type        = string
+  default     = "Home"
 }

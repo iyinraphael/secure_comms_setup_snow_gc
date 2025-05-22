@@ -111,6 +111,6 @@ resource "restapi_object" "user_role_assignments" {
 
 resource "servicenow_http_connection" "genesys_creds" {
   connection_alias = var.connection_alias
-  connection_url = "https://api.mypurecloud.com"
+  connection_url = var.genesys_api_url
   name     = "Genesys Cloud Spoke Connection-valid"
 }
