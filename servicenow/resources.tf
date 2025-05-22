@@ -78,12 +78,9 @@ locals {
 data "restapi_object" "roles" {
   for_each     = toset(local.role_suffixes)
   path         = "/api/now/table/sys_user_role"
-  # find the record where name == each.value
   search_key   = "name"
   search_value = each.value
-  # ServiceNow wraps results under “result”
   results_key  = "result"
-  # once we’ve picked the right item, pull sys_id
   id_attribute = "sys_id"
 }
 
@@ -109,8 +106,51 @@ resource "restapi_object" "user_role_assignments" {
   depends_on = [data.restapi_object.roles]
 }
 
-resource "servicenow_http_connection" "genesys_creds" {
-  connection_alias = var.connection_alias
-  connection_url = var.genesys_api_url
-  name     = "Genesys Cloud Spoke Connection-valid"
+resource "restapi_object" "oauth_provider" {
+  path         = "/api/now/table/oauth_entity"
+  id_attribute = "result/sys_id"                        
+  data = jsonencode({
+    name               = "Genesys Cloud Spoke Connection - Automate"
+    client_id          = var. genesys_oauth_client_id  
+    client_secret      = var.genesys_oauth_client_secret
+    default_grant_type = "client_credentials"
+    type               = "oauth_provider"
+    token_url          = "https://login.${var.genesys_api_url}/oauth/token"
+  })
+}
+
+resource "restapi_object" "oauth_entity_profile" {
+  path         = "/api/now/table/oauth_entity_profile"
+  id_attribute = "result/sys_id"
+  data = jsonencode({
+    name          = "Genesys Cloud OAuth Profile"
+    oauth_entity   = restapi_object.oauth_provider.id   
+    grant_type    = "client_credentials"
+  })
+  depends_on = [restapi_object.oauth_provider]
+}
+
+resource "restapi_object" "oauth2_credentials" {
+  path         = "/api/now/table/oauth_2_0_credentials"
+  id_attribute = "result/sys_id"
+  data = jsonencode({
+    name                 = "Crediatials HTTP Connection"
+    oauth_entity_profile = restapi_object.oauth_entity_profile.id
+  })
+  depends_on = [restapi_object.oauth_entity_profile]
+}
+
+resource "restapi_object" "https_connection" {
+  path         = "/api/now/table/http_connection"
+  id_attribute = "result/sys_id" 
+  
+  data = jsonencode({
+    connection_alias       = var.connection_alias
+    connection_url         = "https://api.${var.genesys_api_url}"
+    credential             =  restapi_object.oauth2_credentials.id
+    name                   = "Genesys Cloud Spoke Connection-valid"
+    })
+    depends_on = [
+      restapi_object.oauth2_credentials
+    ]
 }

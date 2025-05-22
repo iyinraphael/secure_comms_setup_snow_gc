@@ -61,11 +61,6 @@ variable "certificate_pem" {
   description = "PEM cert from certs module"
 }
 
-variable "alias_name" {
-  type        = string
-  description = "Credentials alias in servicenow"
-}
-
 variable "genesys_oauth_client_id" {
   description = "Client ID from the Genesys Cloud OAuth client"
   type        = string

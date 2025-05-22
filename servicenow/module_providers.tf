@@ -15,6 +15,7 @@ provider "restapi" {
 
   create_returns_object = true
   write_returns_object  = true
+  update_method  = "PUT"
 }
 
 

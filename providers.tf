@@ -19,6 +19,7 @@ provider "restapi" {
   headers = {
     "Content-Type" = "application/json"
   }
+  update_method  = "PUT"
 }
 
 provider "servicenow" {

@@ -115,11 +115,6 @@ variable "genesys_api_url" {
   type        = string
 }
 
-variable "alias_name" {
-  type        = string
-  description = "Credentials alias in servicenow"
-}
-
 variable "connection_alias" {
   type        = string
   description = "ServiceNow connection and credentials alias"
@@ -129,3 +124,5 @@ variable "terraform_oauth_client_name" {
   type        = string
   description = "ServiceNow connection and credentials alias"
 }
+
+

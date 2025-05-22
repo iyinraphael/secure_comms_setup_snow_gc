@@ -24,7 +24,6 @@ module "servicenow" {
   certificate_pem             = module.certs.ca_certificate_pem 
   cert_name                   = var.cert_name
   connection_alias            = var.connection_alias
-  alias_name                  = var.alias_name
   cert_password               = var.cert_password
   oauth_name                  = var.oauth_name
   jwt_verifier_name           = var.jwt_verifier_name
@@ -34,4 +33,5 @@ module "servicenow" {
   genesys_api_url             = var.genesys_api_url
   genesys_oauth_client_id     = module.genesys.genesyscloud_oauth_client_id
   genesys_oauth_client_secret = module.genesys.genesyscloud_oauth_client_secret
+
 }
